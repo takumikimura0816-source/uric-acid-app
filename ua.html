@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Uric Acid Alert</title>
+  <title>Uric Acid Detector</title>
   <style>
     body {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ff4d4d, #ff9999);
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
       color: white;
       text-align: center;
     }
@@ -29,12 +30,50 @@
     p {
       font-size: 1.2em;
     }
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #fff;
+      color: #0077ff;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #0077ff;
+      color: white;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>⚠️ High Uric Acid Detected</h1>
-    <p>Please consult a healthcare provider.</p>
+    <h1>NFC Uric Acid Check</h1>
+    <p id="status">Click below to scan NFC</p>
+    <button onclick="scanNFC()">📡 Scan NFC</button>
   </div>
+
+  <script>
+    async function scanNFC() {
+      if ('NDEFReader' in window) {
+        try {
+          const ndef = new NDEFReader();
+          await ndef.scan();
+          document.getElementById("status").innerText = "Scanning... Tap NFC tag";
+
+          ndef.onreading = (event) => {
+            document.getElementById("status").innerText = "UA level: Safe ✅";
+          };
+
+        } catch (error) {
+          document.getElementById("status").innerText = "Error: " + error;
+        }
+      } else {
+        document.getElementById("status").innerText = "NFC not supported on this device ❌";
+      }
+    }
+  </script>
 </body>
 </html>
