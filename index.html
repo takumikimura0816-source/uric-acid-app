@@ -46,6 +46,19 @@
       background: #0077ff;
       color: white;
     }
+
+    /* New styles for UA status */
+    .ua-status {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .safe {
+      color: #00ff88;
+    }
+    .warning {
+      color: #ff4444;
+    }
   </style>
 </head>
 <body>
@@ -56,35 +69,44 @@
   </div>
 
   <script>
-    let warningTimer; // store timer reference
+    let warningTimer;
 
     async function scanNFC() {
       if ('NDEFReader' in window) {
         try {
           const ndef = new NDEFReader();
           await ndef.scan();
-          document.getElementById("status").innerText = "Scanning... Tap NFC tag";
+          updateStatus("Scanning... Tap NFC tag");
 
           // set warning timer for 10 sec
           warningTimer = setTimeout(() => {
-            document.getElementById("status").innerText = "UA level: Warning ⚠️";
+            updateStatus("UA level: Warning ⚠️", "warning");
           }, 10000);
 
           // when NFC tag is read
           ndef.onreading = (event) => {
-            clearTimeout(warningTimer); // stop warning timer
-            document.getElementById("status").innerText = "UA level: Safe ✅";
+            clearTimeout(warningTimer);
+            updateStatus("UA level: Safe ✅", "safe");
           };
 
         } catch (error) {
-          document.getElementById("status").innerText = "Error: " + error;
+          updateStatus("Error: " + error);
         }
       } else {
-        document.getElementById("status").innerText = "NFC not supported on this device ❌";
+        updateStatus("NFC not supported on this device ❌");
       }
+    }
+
+    function updateStatus(message, type) {
+      const statusEl = document.getElementById("status");
+      statusEl.className = "ua-status"; // reset classes
+      if (type === "safe") statusEl.classList.add("safe");
+      else if (type === "warning") statusEl.classList.add("warning");
+      statusEl.innerText = message;
     }
   </script>
 </body>
 </html>
+
 
 
