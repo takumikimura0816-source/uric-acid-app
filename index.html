@@ -56,6 +56,8 @@
   </div>
 
   <script>
+    let warningTimer; // store timer reference
+
     async function scanNFC() {
       if ('NDEFReader' in window) {
         try {
@@ -63,7 +65,14 @@
           await ndef.scan();
           document.getElementById("status").innerText = "Scanning... Tap NFC tag";
 
+          // set warning timer for 10 sec
+          warningTimer = setTimeout(() => {
+            document.getElementById("status").innerText = "UA level: Warning ⚠️";
+          }, 10000);
+
+          // when NFC tag is read
           ndef.onreading = (event) => {
+            clearTimeout(warningTimer); // stop warning timer
             document.getElementById("status").innerText = "UA level: Safe ✅";
           };
 
@@ -77,3 +86,5 @@
   </script>
 </body>
 </html>
+
+
