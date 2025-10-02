@@ -72,7 +72,7 @@
 <body>
   <div class="card">
     <img src="ua-icon.png" alt="UA Icon" class="ua-img">
-    <h1>NFC Uric Acid Check</h1>
+    <h1>Food Freshness Indicator</h1>
     <p id="status">Click below to scan NFC</p>
     <button onclick="scanNFC()">📡 Scan NFC</button>
   </div>
@@ -89,13 +89,13 @@
 
           // set warning timer for 10 sec
           warningTimer = setTimeout(() => {
-            updateStatus("UA level: Warning ⚠️", "warning");
+            updateStatus("UA level: Spoiled ⚠️", "Spoiled");
           }, 10000);
 
           // when NFC tag is read
           ndef.onreading = (event) => {
             clearTimeout(warningTimer);
-            updateStatus("UA level: Safe ✅", "safe");
+            updateStatus("Food freshness level: Fresh ✅", "Fresh");
           };
 
         } catch (error) {
@@ -109,10 +109,11 @@
     function updateStatus(message, type) {
       const statusEl = document.getElementById("status");
       statusEl.className = "ua-status"; // reset classes
-      if (type === "safe") statusEl.classList.add("safe");
-      else if (type === "warning") statusEl.classList.add("warning");
+      if (type === "Fresh") statusEl.classList.add("Fresh");
+      else if (type === "Spoiled") statusEl.classList.add("Spoiled");
       statusEl.innerText = message;
     }
   </script>
 </body>
 </html>
+
