@@ -59,10 +59,19 @@
     .warning {
       color: #ff4444;
     }
+
+    /* Small image style */
+    .ua-img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 15px;
+      border-radius: 12px; /* optional: makes corners rounded */
+    }
   </style>
 </head>
 <body>
   <div class="card">
+    <img src="ua-icon.png" alt="UA Icon" class="ua-img">
     <h1>NFC Uric Acid Check</h1>
     <p id="status">Click below to scan NFC</p>
     <button onclick="scanNFC()">📡 Scan NFC</button>
