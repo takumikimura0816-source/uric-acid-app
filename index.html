@@ -90,7 +90,7 @@
           // set warning timer for 10 sec
           warningTimer = setTimeout(() => {
             updateStatus("Food freshness level: Spoiled ⚠️", "Spoiled");
-          }, 10000);
+          }, 5000);
 
           // when NFC tag is read
           ndef.onreading = (event) => {
@@ -116,3 +116,4 @@
   </script>
 </body>
 </html>
+
