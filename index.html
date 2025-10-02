@@ -47,73 +47,11 @@
       color: white;
     }
 
-    /* New styles for UA status */
+    /* UA status text */
     .ua-status {
       font-size: 1.5em;
       font-weight: bold;
       margin-top: 15px;
     }
     .safe {
-      color: #00ff88;
-    }
-    .warning {
-      color: #ff4444;
-    }
-
-    /* Small image style */
-    .ua-img {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 15px;
-      border-radius: 12px; /* optional: makes corners rounded */
-    }
-  </style>
-</head>
-<body>
-  <div class="card">
-    <img src="ua-icon.png" alt="UA Icon" class="ua-img">
-    <h1>Food Freshness Indicator</h1>
-    <p id="status">Click below to scan NFC</p>
-    <button onclick="scanNFC()">📡 Scan NFC</button>
-  </div>
-
-  <script>
-    let warningTimer;
-
-    async function scanNFC() {
-      if ('NDEFReader' in window) {
-        try {
-          const ndef = new NDEFReader();
-          await ndef.scan();
-          updateStatus("Scanning... Tap NFC tag");
-
-          // set warning timer for 10 sec
-          warningTimer = setTimeout(() => {
-            updateStatus("UA level: Spoiled ⚠️", "Spoiled");
-          }, 10000);
-
-          // when NFC tag is read
-          ndef.onreading = (event) => {
-            clearTimeout(warningTimer);
-            updateStatus("Food freshness level: Fresh ✅", "Fresh");
-          };
-
-        } catch (error) {
-          updateStatus("Error: " + error);
-        }
-      } else {
-        updateStatus("NFC not supported on this device ❌");
-      }
-    }
-
-    function updateStatus(message, type) {
-      const statusEl = document.getElementById("status");
-      statusEl.className = "ua-status"; // reset classes
-      if (type === "Fresh") statusEl.classList.add("Fresh");
-      else if (type === "Spoiled") statusEl.classList.add("Spoiled");
-      statusEl.innerText = message;
-    }
-  </script>
-</body>
-</html>
-
+      color: #0
